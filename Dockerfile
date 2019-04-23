@@ -8,6 +8,7 @@ RUN set -ex\
     && apt-get update \
     && apt-get install -y --no-install-recommends \
         libpcre3-dev \
+        zlib1g-dev \
         libssl-dev \
         perl \
         build-essential \
@@ -25,6 +26,7 @@ RUN set -ex\
     && make install \
     && apt-get purge -y --auto-remove \
         libpcre3-dev \
+        zlib1g-dev \
         libssl-dev \
         perl \
         build-essential \
