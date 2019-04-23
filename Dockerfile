@@ -31,8 +31,8 @@ RUN set -ex\
 
 ENV PATH=/usr/local/openresty/bin:/usr/local/openresty/nginx/sbin:$PATH
 
-VOLUME["usr/local/openresty/nginx/conf"]
-VOLUME["usr/local/openresty/nginx/logs"]
+VOLUME ["/usr/local/openresty/nginx/conf"]
+VOLUME ["/usr/local/openresty/nginx/logs"]
 
 EXPOSE 80
 EXPOSE 443
