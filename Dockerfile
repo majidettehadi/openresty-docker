@@ -2,17 +2,37 @@
 
 FROM majid7221/debian:stretch
 
+ARG RESTY_VERSION=1.13.6.2
+
 RUN set -ex\
-    && wget -qO /tmp/pubkey.gpg https://openresty.org/package/pubkey.gpg \
-    && apt-key add /tmp/pubkey.gpg \
-    && rm /tmp/pubkey.gpg \
-    && add-apt-repository -y "deb http://openresty.org/package/debian $(lsb_release -sc) openresty" \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
-        openresty \
+        libssl-dev \
+        perl \
+        build-essential \
+        make \
+    && curl https://openresty.org/download/openresty-$RESTY_VERSION.tar.gz -o openresty.tar.gz \
+    && tar -xvf openresty.tar.gz \
+    && cd openresty\
+    && ./configure \
+        --with-http_geoip_module \
+        --with-stream \
+        --with-stream_ssl_module \
+        --with-stream_realip_module \
+        --with-stream_geoip_module \
+    && make \
+    && make install \
+    && apt-get purge -y --auto-remove \
+        libssl-dev \
+        perl \
+        build-essential \
+        make \
     && rm -rf /var/lib/apt/lists/*
 
-ENV PATH="$PATH:/usr/local/openresty/luajit/bin:/usr/local/openresty/nginx/sbin:/usr/local/openresty/bin"
+ENV PATH=/usr/local/openresty/bin:/usr/local/openresty/nginx/sbin:$PATH
+
+VOLUME["usr/local/openresty/nginx/conf"]
+VOLUME["usr/local/openresty/nginx/logs"]
 
 EXPOSE 80
 EXPOSE 443
