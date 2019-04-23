@@ -7,7 +7,7 @@ ARG RESTY_VERSION=1.13.6.2
 RUN set -ex\
     && apt-get update \
     && apt-get install -y --no-install-recommends \
-        libpcre \
+        libpcre3-dev \
         libssl-dev \
         perl \
         build-essential \
@@ -24,7 +24,7 @@ RUN set -ex\
     && make \
     && make install \
     && apt-get purge -y --auto-remove \
-        libpcre \
+        libpcre3-dev \
         libssl-dev \
         perl \
         build-essential \
