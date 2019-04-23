@@ -13,7 +13,7 @@ RUN set -ex\
         make \
     && curl https://openresty.org/download/openresty-$RESTY_VERSION.tar.gz -o openresty.tar.gz \
     && tar -xvf openresty.tar.gz \
-    && cd openresty\
+    && cd openresty-$RESTY_VERSION \
     && ./configure \
         --with-http_geoip_module \
         --with-stream \
