@@ -9,6 +9,7 @@ RUN set -ex\
     && apt-get install -y --no-install-recommends \
         libpcre3-dev \
         zlib1g-dev \
+        libgeoip-dev \
         libssl-dev \
         perl \
         build-essential \
@@ -27,6 +28,7 @@ RUN set -ex\
     && apt-get purge -y --auto-remove \
         libpcre3-dev \
         zlib1g-dev \
+        libgeoip-dev \
         libssl-dev \
         perl \
         build-essential \
