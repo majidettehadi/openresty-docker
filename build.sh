@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-# Read arg from build.properties
-
-set -x
-. build.properties
-docker build --force-rm  \
-    -t $REPO_NAME:latest .
+. nev
+docker build --force-rm --build-arg VERSION=$VERSION \
+    -t majid7221/openresty:$VERSION .

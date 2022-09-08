@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
 
-# Push image according to repo name
-set -x
-. build.properties
-docker push $REPO_NAME:latest
+. nev
+docker push majid7221/openresty:$VERSION
