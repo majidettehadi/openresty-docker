@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-. nev
+. env
 docker push majid7221/openresty:$VERSION
