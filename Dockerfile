@@ -9,9 +9,11 @@ RUN set -ex \
         zlib1g-dev \
         libgeoip-dev \
         libssl-dev \
-        perl \
         build-essential \
-        make
+        make \
+        # don't removee
+        perl \
+        curl
 
 WORKDIR /usr/local/src
 RUN set -ex \
@@ -32,7 +34,6 @@ RUN set -ex \
         zlib1g-dev \
         libgeoip-dev \
         libssl-dev \
-        perl \
         build-essential \
         make \
     && rm -rf /var/lib/apt/lists/*
