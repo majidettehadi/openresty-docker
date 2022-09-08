@@ -1,10 +1,8 @@
-# Runtime Envs: README.md
+FROM debian:bullseye
 
-FROM majid7221/debian:stretch
+ARG VERSION
 
-ARG RESTY_VERSION=1.13.6.2
-
-RUN set -ex\
+RUN set -ex \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
         libpcre3-dev \
@@ -13,10 +11,14 @@ RUN set -ex\
         libssl-dev \
         perl \
         build-essential \
-        make \
-    && curl https://openresty.org/download/openresty-$RESTY_VERSION.tar.gz -o openresty.tar.gz \
-    && tar -xvf openresty.tar.gz \
-    && cd openresty-$RESTY_VERSION \
+        make
+
+WORKDIR /usr/local/src
+RUN set -ex \
+    && curl -LO https://openresty.org/download/openresty-$VERSION.tar.gz \
+    && tar -xvf openresty$VERSION.tar.gz \
+    && rm openresty$VERSION.tar.gz \
+    && cd openresty-$VERSION \
     && ./configure \
         --with-http_geoip_module \
         --with-stream \
@@ -35,12 +37,12 @@ RUN set -ex\
         make \
     && rm -rf /var/lib/apt/lists/*
 
-ENV PATH=/usr/local/openresty/bin:/usr/local/openresty/nginx/sbin:$PATH
+WORKDIR /usr/local/openresty
 
-VOLUME ["/usr/local/openresty/nginx/conf"]
-VOLUME ["/usr/local/openresty/nginx/logs"]
+ENV PATH=$PATH:/usr/local/openresty/bin
 
-EXPOSE 80
-EXPOSE 443
+VOLUME ["/usr/local/openresty/nginx/conf","/usr/local/openresty/nginx/logs"]
 
-CMD ["/usr/bin/openresty", "-g", "daemon off;"]
+EXPOSE 80 443
+
+CMD ["openresty", "-g", "daemon off;"]
